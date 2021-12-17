@@ -7,9 +7,25 @@
 
 #include "EEPROM.h"
 
-// Constructor for the EEPROM class
-void EEPROM::EEPROM(int b) {
-	int BOARD = B 
+// Constructors for the EEPROM class:
+EEPROM::EEPROM(int board) {
+	int BOARD = board
+}
+
+EEPROM::EEPROM(int board, volatile byte* I1, volatile byte* O1)
+{
+	BOARD = board;
+	in1 = *I1;
+	out1 = *O1;
+}
+
+EEPROM::EEPROM(int board, volatile byte* I1, volatile byte* I2, volatile byte* O1, volatile byte* O2)
+{
+	BOARD = board;
+	in1 = *I1;
+	in2 = *I2;
+	out1 = *O1;
+	out2 = *O2;
 }
 
 void EEPROM::writeEEP(unsigned char data, unsigned short address) {
