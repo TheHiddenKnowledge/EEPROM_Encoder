@@ -16,10 +16,8 @@
 
 #include <Arduino.h>
 #if defined(ARDUINO_AVR_UNO)
-	#include <iom328p.h>
 	#define BOARD 1 
 #elif defined(ARDUINO_AVR_MEGA2560)
-	#include <iom2560.h>
 	#define BOARD 2
 #endif
 
