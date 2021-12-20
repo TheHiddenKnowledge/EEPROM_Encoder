@@ -76,7 +76,7 @@ void EEP::writeWord(uint8_t data, uint16_t address)
 		}
 		else
 		{
-			return
+			return;
 		}
 	}
 	if (BOARD == 2)
@@ -90,7 +90,7 @@ void EEP::writeWord(uint8_t data, uint16_t address)
 		}
 		else
 		{
-			return
+			return;
 		}
 	}
 	digitalWrite(we, HIGH);
@@ -120,28 +120,28 @@ void EEP::writePage(uint8_t *data, uint8_t datasize, uint16_t start)
 		digitalWrite(we, LOW);
 		if (BOARD == 1)
 		{
-			if (data < MAXD)
+			if (*(data+i) < MAXD)
 			{
-				*a1 |= (address & 0x003F);
-				*a2 |= adress >> 6;
-				*d1 |= data;
+				*a1 |= (start+i & 0x003F);
+				*a2 |= start+i >> 6;
+				*d1 |= *(data+1);
 			}
 			else
 			{
-				return
+				return;
 			}
 		}
 		if (BOARD == 2)
 		{
-			if (data < MAXD)
+			if (*(data+i) < MAXD)
 			{
-				*a1 |= (address & 0x00FF);
-				*a2 |= (address >> 8);
-				*d1 |= data;
+				*a1 |= (start+i & 0x00FF);
+				*a2 |= (start+i >> 8);
+				*d1 |= *(data+1);
 			}
 			else
 			{
-				return
+				return;
 			}
 		}
 		digitalWrite(ce, HIGH);
