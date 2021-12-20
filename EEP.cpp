@@ -21,7 +21,7 @@ EEP::EEP(int CE, int WE, int OE)
 	}
 	else
 	{
-		return
+		return;
 	}
 	ce = CE;
 	we = WE;
