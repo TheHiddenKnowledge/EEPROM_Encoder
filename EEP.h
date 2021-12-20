@@ -22,15 +22,15 @@
 #endif
 
 
-class EEPROM
+class EEP
 {
 public:
 	// Constructor for EEPROM class that sets the address and data ports to defaults values based on the inputted board.
 	// This is prefered if the Arduino is only used to read and write to the EEPROM without any other application.
-	EEPROM(int CE, int WE, int OE);
+	EEP(int CE, int WE, int OE);
 	// Alternative constructor that allows the user to define which ports are to be used for the device address and data I/O.
 	// Note that some of the ports may interfere with pins already used for other applications.
-	EEPROM(volatile uint8_t *A1, volatile uint8_t *A2, volatile uint8_t *D1, int CE, int WE, int OE);
+	EEP(volatile uint8_t *A1, volatile uint8_t *A2, volatile uint8_t *D1, int CE, int WE, int OE);
 	// Pointer to first address port.
 	volatile uint8_t *a1;
 	// Pointer to second address port.

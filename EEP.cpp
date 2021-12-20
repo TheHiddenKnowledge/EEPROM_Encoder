@@ -1,6 +1,6 @@
-#include "EEPROM.h"
+#include "EEP.h"
 
-EEPROM::EEPROM(int CE, int WE, int OE)
+EEP::EEP(int CE, int WE, int OE)
 {
 	// These default ports are what I have preferred using for my board setup and I recommend if you don't need to use the other pins.
 	if (BOARD == 1)
@@ -31,9 +31,8 @@ EEPROM::EEPROM(int CE, int WE, int OE)
 	digitalWrite(we, HIGH);
 }
 
-EEPROM::EEPROM(volatile uint8_t *A1, volatile uint8_t *A2, volatile uint8_t *D1, int CE, int WE, int OE)
+EEP::EEP(volatile uint8_t *A1, volatile uint8_t *A2, volatile uint8_t *D1, int CE, int WE, int OE)
 {
-	BOARD = board;
 	a1 = A1;
 	a2 = A2;
 	d1 = D1;
@@ -62,7 +61,7 @@ EEPROM::EEPROM(volatile uint8_t *A1, volatile uint8_t *A2, volatile uint8_t *D1,
 	digitalWrite(we, HIGH);
 }
 
-void EEPROM::writeWord(uint8_t data, uint16_t address)
+void EEP::writeWord(uint8_t data, uint16_t address)
 {
 	digitalWrite(ce, LOW);
 	digitalWrite(we, LOW);
@@ -72,7 +71,7 @@ void EEPROM::writeWord(uint8_t data, uint16_t address)
 		{
 			*(d1 - 1) |= 0xFF;
 			*a1 |= (address & 0x003F);
-			*a2 |= adress >> 6;
+			*a2 |= address >> 6;
 			*d1 |= data;
 		}
 		else
@@ -98,7 +97,7 @@ void EEPROM::writeWord(uint8_t data, uint16_t address)
 	digitalWrite(ce, HIGH);
 }
 
-void EEPROM::writePage(uint8_t *data, uint8_t datasize, uint16_t start)
+void EEP::writePage(uint8_t *data, uint8_t datasize, uint16_t start)
 {
 	if (BOARD == 1)
 	{
@@ -150,17 +149,17 @@ void EEPROM::writePage(uint8_t *data, uint8_t datasize, uint16_t start)
 	}
 }
 
-uint8_t EEPROM::readWord(uint16_t address)
+uint8_t EEP::readWord(uint16_t address)
 {
 	digitalWrite(ce, LOW);
 	digitalWrite(oe, LOW);
 	*(d1 - 1) |= 0x00;
 	if (BOARD == 1)
 	{
-		if (address < MAXA1 && data < MAXD)
+		if (address < MAXA1)
 		{
 			*a1 |= (address & 0x003F);
-			*a2 |= adress >> 6;
+			*a2 |= address >> 6;
 			return *d1;
 		}
 		else
@@ -170,7 +169,7 @@ uint8_t EEPROM::readWord(uint16_t address)
 	}
 	if (BOARD == 2)
 	{
-		if (address < MAXA2 && data < MAXD)
+		if (address < MAXA2)
 		{
 			*a1 |= (address & 0x00FF);
 			*a2 |= (address >> 8);
